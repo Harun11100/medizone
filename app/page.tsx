@@ -12,13 +12,13 @@ export default function Home() {
       {/* OTP verification */}
 
        <section className="remove-scrollbar container my-auto">
-        <div className="sub-container max-w-[496px]">
+        <div className="sub-container max-w-[500px]">
           <Image 
           src='/assets/images/logo.png'
            alt="full-icon" 
-           width={1000}
-           height={1000}
-           className="h-25 mb-12 w-fit"/>
+           width={100}
+           height={100}
+           className="h-30"/>
            <PatientForm/>
            <div className="text-14-regular mt-20 flex justify-between">
            <p className="justify-items-end text-dark-600 xl:text-left">
