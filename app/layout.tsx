@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+
 import {Plus_Jakarta_Sans} from 'next/font/google'
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/ui/ui/theme-provider";
 
-import {cn} from '/@lib/utils'
+
 
 
 const fontSans=Plus_Jakarta_Sans({
@@ -24,12 +26,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={cn>}
-      >
-        {children}
-      </body>
-    </html>
+    <html lang="en" suppressHydrationWarning>
+        <head />
+        <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
   );
 }
