@@ -33,14 +33,14 @@ interface CustomProps{
 }
 const RenderInput=({field,props}:{field:any; props:CustomProps})=>{
       // switch case use is much efficient this type of case
-     switch (key) {
-      case value:
+//      switch (key) {
+//       case value:
             
-            break;
+//             break;
      
-      default:
-            break;
-     }
+//       default:
+//             break;
+//      }
 
 
       

@@ -14,11 +14,11 @@ export default function Home() {
        <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image 
-          src='/assets/icons/logo-full.svg'
+          src='/assets/images/logo.png'
            alt="full-icon" 
            width={1000}
            height={1000}
-           className="h-10 mb-12 w-fit"/>
+           className="h-25 mb-12 w-fit"/>
            <PatientForm/>
            <div className="text-14-regular mt-20 flex justify-between">
            <p className="justify-items-end text-dark-600 xl:text-left">
@@ -32,7 +32,7 @@ export default function Home() {
         </div>
        
        </section>
-       <Image src="/assets/images/onboarding-img.png"
+       <Image src="/assets/images/onboarding_img.png"
        alt='patient'
        height={1000}
        width={1000}

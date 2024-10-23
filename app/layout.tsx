@@ -16,6 +16,7 @@ const fontSans=Plus_Jakarta_Sans({
 
 })
 export const metadata: Metadata = {
+  icons:'/assets/icons/icon.svg',
   title: "MediZone",
   description: "A healthcare management system",
 };
