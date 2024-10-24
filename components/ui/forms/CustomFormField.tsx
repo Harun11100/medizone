@@ -2,9 +2,7 @@
 
 import React from 'react'
 import {
-      
       FormControl,
-      FormDescription,
       FormField,
       FormItem,
       FormLabel,
@@ -61,7 +59,7 @@ const RenderInput=({field,props}:{field:any; props:CustomProps})=>{
                  
                       <FormControl>
           <PhoneInput
-            defaultCountry="US"
+            defaultCountry="BD"
             placeholder={placeholder}
             international
             withCountryCallingCode
@@ -93,15 +91,6 @@ const CustomFormField = (props:CustomProps) => {
       name={name}
       render={({ field }) => (
         <FormItem>
-          {/* <FormLabel>Username</FormLabel>
-          <FormControl>
-            <Input placeholder="shadcn" {...field} />
-          </FormControl>
-          <FormDescription>
-            This is your public display name.
-          </FormDescription>
-          <FormMessage /> */}
-
           {fieldType!==FormFieldType.CHECKBOX && label &&
           (
            <FormLabel>{label}</FormLabel>
