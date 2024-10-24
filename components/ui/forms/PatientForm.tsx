@@ -3,9 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/components/ui/button"
+
 import { Form } from "../form"
 import CustomFormField from "./CustomFormField"
+import SubmitButton from "../SubmitButton"
+import { useState } from "react"
+import { UserFormValidation } from "@/lib/Validation"
 
 
 export enum FormFieldType{
@@ -21,23 +24,23 @@ export enum FormFieldType{
 }
 
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
+
 
 const PatientForm=()=> {
   // 1. Define your form.
-  const form= useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
+  const [isLoading,setIsLoading]=useState(false)
+
+  const form= useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
+      defaultValues: {
+        name: "",
+        email:"",
+        phone:""
     },
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof UserFormValidation>) {
     console.log(values)
   }
   return(
@@ -79,8 +82,7 @@ const PatientForm=()=> {
              />
         
         
-        <Button type="submit" className="bg-gray-500 rounded-md ">Submit</Button>
-       
+      <SubmitButton isLoading={isLoading}>Get started</SubmitButton>
       
       </form>
     </Form>
