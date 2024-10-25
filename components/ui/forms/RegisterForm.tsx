@@ -14,7 +14,8 @@ import { createUser } from "@/lib/actions/patient.action"
 import { FormFieldType } from "./PatientForm"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import Image from "next/image"
-import { Label } from "@radix-ui/react-select"
+import { Label, SelectItem } from "@radix-ui/react-select"
+import { Doctors, GenderOptions, IdentificationTypes } from "@/constant"
 
 
 
@@ -27,10 +28,10 @@ const RegisterForm=({user}:{user:User})=> {
   const form= useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
       defaultValues: {
-            ...PatientFormDefaultValues,
-           name: user.name,
-           email:user.email,
-           phone:user.phone
+      
+           name: "",
+           email:"",
+           phone:''
     },
   });
 
@@ -146,7 +147,7 @@ const RegisterForm=({user}:{user:User})=> {
               control={form.control}
               name="address"
               label="Address"
-              placeholder="14 street, New york, NY - 5101"
+              placeholder="Kashimpur Gazipur "
             />
 
             <CustomFormField
@@ -188,8 +189,8 @@ const RegisterForm=({user}:{user:User})=> {
             placeholder="Select a physician"
             >{
                   Doctors.map((doctor,i)=>(
-                        <SelectItem key={doctor.name+i}>
-                              <div>
+                        <SelectItem key={doctor.name+i} value={doctor.name}>
+                              <div className="flex cursor-pointer items-center gap-2">
                                     <Image
                                     src={doctor.image}
                                     alt='doctor'
@@ -272,7 +273,7 @@ const RegisterForm=({user}:{user:User})=> {
               placeholder="Select Identification Type">
 
               {IdentificationTypes.map((type,i)=>(
-                  <SelectItem key={type+i}>
+                  <SelectItem key={type+i} value={type}>
                         {type}
                   </SelectItem>
               ))}
