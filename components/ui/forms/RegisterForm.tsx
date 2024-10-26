@@ -5,20 +5,20 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Form, FormControl } from "../form"
-import CustomFormField from "./CustomFormField"
+import CustomFormField, { FormFieldType } from "./CustomFormField"
 import SubmitButton from "../SubmitButton" 
 import { useState } from "react"
-import { UserFormValidation } from "@/lib/Validation"
+import { PatientFormValidation} from "@/lib/Validation"
 import { useRouter } from "next/navigation"
-import { createUser } from "@/lib/actions/patient.action"
-import { FormFieldType } from "./PatientForm"
+
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import Image from "next/image"
 
-import { Doctors, GenderOptions, IdentificationTypes } from "@/constant"
+import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constant"
 import { SelectItem } from "../select"
 import { Label } from "../label"
 import { FileUploader } from "../FileUploader"
+import { registerPatient } from "@/lib/actions/patient.action"
 
 
 
@@ -27,40 +27,55 @@ import { FileUploader } from "../FileUploader"
 const RegisterForm=({user}:{user:User})=> {
   const router=useRouter()
   // 1. Define your form.
-  const [isLoading,setIsLoading]=useState(false)
+  const [isLoading,setIsLoading]=useState(false);
 
-  const form= useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form= useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
       defaultValues: {
-      
-           name: "",
-           email:"",
-           phone:''
+            ...PatientFormDefaultValues,
+           name:user.name,
+           email:user.email,
+           phone:user.phone
     },
   });
 
   // 2. Define a submit handler.
-   const onSubmit= async (values: z.infer<typeof UserFormValidation>)=>{
-    
+   const onSubmit= async (values: z.infer<typeof PatientFormValidation>)=>{
     setIsLoading(true);
+// store file into form data
+    let formData;
+    if(values.identificationDocument && values.identificationDocument?.length>0){
+         
+      // blobFile is special type of file that only broser can read
+      const blobFile= new Blob([values.identificationDocument[0]],{
+           
+            type:values.identificationDocument[0].type,
+      });
+
+      formData= new FormData();
+      formData.append('blobFile',blobFile);
+      formData.append ('fileName',values.identificationDocument[0].name)
+
+    }
 
     try{
-
-      const user ={
-        name:values.name,
-        email:values.email,
-        phone:values.phone
-      }
+         const patientData={
+            ...values,
+            userId:user.$id,
+            birthDate:new Date(values.birthDate),
+            identificationDocument:formData,
+         }
+         //@ts-ignore
+         const patient= await registerPatient(patientData)
       
-      const newUser=await createUser(user);
-
-
-    if(newUser) router.push(`/patients/${newUser.$id}/register`)
+         if(patient) router.push(`/patients/${user.$id}/new-appointment`);
 
     }catch(error){
-          console.log(error)
+          console.log('this error comes from registerForm',error)
     }
   }
+
+
 
   return(
       <Form {...form}>
@@ -131,7 +146,7 @@ const RegisterForm=({user}:{user:User})=> {
                                           value={option} 
                                           id={option}
                                           />
-                                          <Label htmlFor={option} classNmae="cursor-pointer">
+                                          <Label htmlFor={option} className="cursor-pointer">
                                                 {option}
                                           </Label>
                                     </div>

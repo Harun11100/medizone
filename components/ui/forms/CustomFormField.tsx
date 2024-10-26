@@ -12,7 +12,7 @@ import {
 import 'react-phone-number-input/style.css'
 import { Input } from "@/components/ui/input"
 import { Control } from 'react-hook-form'
-import { FormFieldType } from './PatientForm'
+
 import Image from 'next/image'
 import PhoneInput from 'react-phone-number-input'
 import DatePicker from "react-datepicker";
@@ -26,8 +26,18 @@ import { Textarea } from '../textarea';
 
 
 
+export enum FormFieldType {
+  INPUT = "input",
+  TEXTAREA = "textarea",
+  PHONE_INPUT = "phoneInput",
+  CHECKBOX = "checkbox",
+  DATE_PICKER = "datePicker",
+  SELECT = "select",
+  SKELETON = "skeleton",
+}
+
 interface CustomProps{
-      control:Control<any>,
+      control:Control<any>
       fieldType:FormFieldType,
       name:string,
       label?:string,
