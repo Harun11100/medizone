@@ -146,18 +146,10 @@ const RenderInput=({field,props}:{field:any; props:CustomProps})=>{
                     </div>
                    
                   </FormControl>
-  
-             
-                )   
-
-
-            
+                )      
       default:
             break;
-     }
-
-
-      
+     }   
 }
 
 

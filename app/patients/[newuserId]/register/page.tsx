@@ -2,7 +2,6 @@
 import RegisterForm from '@/components/ui/forms/RegisterForm';
 import { getUser } from '@/lib/actions/patient.action';
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react'
 
 const Register = async ({params:{userId}}:SearchParamProps) => {
@@ -15,7 +14,7 @@ const Register = async ({params:{userId}}:SearchParamProps) => {
 
 
        <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[860px] flex flex-1 flex-col py-10 ">
+        <div className="sub-container max-w-[860px] flex-1 flex-col py-10 ">
           <Image 
            src='/assets/images/logo.png'
            alt="full-icon" 
@@ -24,15 +23,10 @@ const Register = async ({params:{userId}}:SearchParamProps) => {
            className="h-40 w-fit mb-10"/>
  
            <RegisterForm user={user}/>
-           
-           <div className="text-14-regular mt-20 flex justify-between">
-           <p className="justify-items-end text-dark-600 xl:text-left">
+           <p className=" copyright py-10 ">
            © 2024 MediZone
            </p>
-           <Link href='/?admin=true' className="text-blue-400">
-           Admin</Link>
-         
-           </div>
+           
 
         </div>
        
