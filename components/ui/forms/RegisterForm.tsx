@@ -14,8 +14,12 @@ import { createUser } from "@/lib/actions/patient.action"
 import { FormFieldType } from "./PatientForm"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import Image from "next/image"
-import { Label, SelectItem } from "@radix-ui/react-select"
+
 import { Doctors, GenderOptions, IdentificationTypes } from "@/constant"
+import { SelectItem } from "../select"
+import { Label } from "../label"
+import { FileUploader } from "../FileUploader"
+
 
 
 
@@ -242,8 +246,8 @@ const RegisterForm=({user}:{user:User})=> {
                    />
 
              </div>
-             <div className="flex flex-col gap-5 xl:flex-row">
-             <CustomFormField
+             <div className="flex flex-col gap-5 xl:flex-row  xl:gap-8 xl:w-full">
+                   <CustomFormField
                    fieldType={FormFieldType.TEXTAREA}
                    control={form.control}
                    name="familyMedicalHistory"
@@ -265,7 +269,8 @@ const RegisterForm=({user}:{user:User})=> {
                               Identification and Verification
                         </h2>
                   </div>
-              <CustomFormField
+                  <div className="flex flex-col gap-5">
+            <CustomFormField
               fieldType={FormFieldType.SELECT}
               control={form.control}
               name="identificationType"
@@ -278,6 +283,7 @@ const RegisterForm=({user}:{user:User})=> {
                   </SelectItem>
               ))}
               </CustomFormField>
+
               <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
@@ -298,6 +304,9 @@ const RegisterForm=({user}:{user:User})=> {
                   </FormControl>
                )}
             />
+
+                  </div>
+           
            </section>
 
            <section className=" space-y-6">

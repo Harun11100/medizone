@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
+// import {E164Number} from 'libphone-js/core';
 import {
       FormControl,
       FormField,
@@ -19,6 +20,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Select, SelectContent, SelectTrigger, SelectValue } from '../select';
+import { Checkbox } from '../checkbox';
+import { Label } from '../label';
+import { Textarea } from '../textarea';
 
 
 
@@ -41,9 +45,9 @@ interface CustomProps{
 }
 const RenderInput=({field,props}:{field:any; props:CustomProps})=>{
       // switch case use is much efficient this type of case
-      const {fieldType,iconAlt,iconSrc,placeholder,showTimeSelect,dateFormat,renderSkeleton}=props;
+      const {fieldType,iconAlt,iconSrc,placeholder,showTimeSelect,dateFormat,renderSkeleton,label,name}=props;
  switch (fieldType) {
-      case FormFieldType.INPUT || FormFieldType.TEXTAREA:
+      case FormFieldType.INPUT:
             
           return(
             <div className='flex rounded-md border border-dark-500'>
@@ -81,7 +85,10 @@ const RenderInput=({field,props}:{field:any; props:CustomProps})=>{
           
             return(
               <div className='flex rounded-md border border-dark-500 bg-dark-400 '>
-                    {iconSrc && <Image src={iconSrc} alt={iconAlt||'icons'} width={25}height={25} />}
+
+                    {iconSrc &&
+                     <Image src={iconSrc} alt={iconAlt||'icons'} width={25}height={25} 
+                     />}
                    
                     <FormControl>
                         <DatePicker selected={field.value} onChange={(date)=>field.onChange(date)}
@@ -116,22 +123,34 @@ const RenderInput=({field,props}:{field:any; props:CustomProps})=>{
             return(
               renderSkeleton ? renderSkeleton(field):null
             )
-            // case FormFieldType.TEXTAREA:
-            //   return(
-            //     <div className='flex rounded-md border border-dark-500'>
-            //     {iconSrc && 
-            //     <Image src={iconSrc} alt={iconAlt||'icon'} width={25} height={25} 
-            //     className='ml-2'/>}
-            //     <FormControl>
-            //     <Input 
-            //      placeholder={placeholder}
-            //      {...field}
-            //      className='shad-input border-0 bg-black'
-            //     />
-            //     </FormControl>
+            case FormFieldType.TEXTAREA:
+              return(
+                   <FormControl>
+                    <Textarea
+                    placeholder={placeholder}
+                    {...field}
+                    disabled={props.disabled}
+                    className='shad-textArea'/>
+                   </FormControl>
+              )
+              case FormFieldType.CHECKBOX:
+                return(
+                  <FormControl>
+                    <div className='flex items-center gap-4  '>
+                      <Checkbox id={name} checked={field.value}
+                      onCheckedChange={field.onChange}/>
+                    
+                      <Label htmlFor={name} className='checkboxx-label'>
+                        {label}
+                      </Label>
+                    </div>
+                   
+                  </FormControl>
+  
+             
+                )   
 
-            // </div>
-            //   )   
+
             
       default:
             break;
