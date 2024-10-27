@@ -203,7 +203,7 @@ const RegisterForm=({user}:{user:User})=> {
           
                   </div>
                   
-                  <CustomFormField
+           <CustomFormField
             fieldType={FormFieldType.SELECT}
             control={form.control}
             name="primaryPhysician"
