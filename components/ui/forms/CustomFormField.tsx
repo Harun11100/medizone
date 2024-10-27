@@ -96,19 +96,24 @@ const RenderInput=({field,props}:{field:any; props:CustomProps})=>{
             return(
               <div className='flex rounded-md border border-dark-500 bg-dark-400 '>
 
-                    {iconSrc &&
-                     <Image src={iconSrc} alt={iconAlt||'icons'} width={25}height={25} 
-                     />}
+                    
+                       <Image
+                        src="/assets/icons/calendar.svg"
+                        height={24}
+                        width={24}
+                        alt="user"
+                        className="ml-2"
+                      />
                    
-                    <FormControl>
+                      <FormControl>
                         <DatePicker selected={field.value} onChange={(date)=>field.onChange(date)}
                         dateFormat={dateFormat ?? 'MM/dd/yyyy'}
                         showTimeSelect={showTimeSelect ?? false }
                         timeInputLabel='Time:'
                         wrapperClassName='date-picker'
                          />
-                    </FormControl>
-              </div>
+                      </FormControl>
+               </div>
              
             )   
             case FormFieldType.SELECT:

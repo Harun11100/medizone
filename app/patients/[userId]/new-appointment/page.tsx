@@ -1,13 +1,16 @@
 import NewAppointmentForm from "@/components/ui/forms/NewAppointmentForm";
 
-import { getUser } from "@/lib/actions/patient.action";
+import { getPatient, getUser } from "@/lib/actions/patient.action";
+// import { UserRoundIcon } from "lucide-react";
 import Image from "next/image";
 // import { redirect } from "next/navigation";
 
 
 
 const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
-  const user = await getUser(userId);
+
+  const patient =await getPatient(userId)
+
 
 return (
     <div className="flex h-screen max-h-screen">
@@ -19,9 +22,11 @@ return (
             width={100}
             alt="patient"
             className="mb-12 h-30 w-fit"
-          />
+          / >
 
-          <NewAppointmentForm user={user} />
+          <NewAppointmentForm type='create' userId={userId}
+          patientId={patient.$id} 
+           />
 
           <p className="copyright py-12">© 2024 MediZone</p>
         </div>
@@ -32,7 +37,7 @@ return (
         height={1000}
         width={1000}
         alt="patient"
-        className="side-img max-w-[390px]"
+        className="side-img max-w-[390px] bg-bottom"
       />
     </div>
   );
