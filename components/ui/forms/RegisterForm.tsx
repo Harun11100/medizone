@@ -79,14 +79,14 @@ const RegisterForm=({user}:{user:User})=> {
 
   return(
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12 flex-1">
-            <section className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1">
+            <section className="flex flex-col gap-5">
                   
                    <h1 className="header">Welcome</h1>
                    <p className='text-dark-700'>Let us know about yourself </p>
-            </section>
-            <section className="space-y-6">
-                  <div className="mb-9 space-y-1">
+           
+         
+                  <div className="py-5">
                     <h2 className=" sub-header text-dark-700">Personal Information</h2>
                   </div>
 
@@ -99,7 +99,7 @@ const RegisterForm=({user}:{user:User})=> {
              iconSrc='/assets/icons/user.svg'
              iconAlt='user'
              />
-             <div className="flex gap-6 flex-col xl:flex-row">
+             <div className="flex gap-7 flex-col xl:flex-row">
 
 
              <CustomFormField
@@ -121,7 +121,7 @@ const RegisterForm=({user}:{user:User})=> {
              />
              </div>  
             
-             <div className="flex flex-col gap-5 xl:flex-row">
+             <div className="flex flex-col gap-7 xl:flex-row">
              <CustomFormField
               fieldType={FormFieldType.DATE_PICKER}
               control={form.control}
@@ -136,12 +136,12 @@ const RegisterForm=({user}:{user:User})=> {
               renderSkeleton={(field)=>(
                   <FormControl>
                         <RadioGroup
-                         className="flex h-11 gap-6 xl:justify-between"
+                         className="flex h-11 gap-3 xl:justify-between"
                          onValueChange={field.onChange}
                          defaultValue={field.value}
                          >{
                               GenderOptions.map((option,i)=>(
-                                    <div key={option+i}>
+                                    <div key={option+i} className="radio-group">
                                           <RadioGroupItem
                                           value={option} 
                                           id={option}
@@ -159,7 +159,7 @@ const RegisterForm=({user}:{user:User})=> {
                />
              </div>
 
-             <div className="flex flex-col gap-5 xl:flex-row">
+             <div className="flex flex-col gap-7 xl:flex-row">
 
             <CustomFormField
               fieldType={FormFieldType.INPUT}
@@ -179,7 +179,7 @@ const RegisterForm=({user}:{user:User})=> {
              </div>
 
 
-             <div className="flex flex-col gap-5 xl:flex-row">
+             <div className="flex flex-col gap-7 xl:flex-row">
              <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
@@ -197,9 +197,12 @@ const RegisterForm=({user}:{user:User})=> {
             />
              </div>
              </section>
-            <section className="space-y-6">
-                  <h2 className=" sub-header text-dark-700">Medical Information</h2>
+            <section className=" flex flex-col gap-6 ">
+                  <div className="py-7">
+                        <h2 className=" sub-header text-dark-700">Medical Information</h2>
           
+                  </div>
+                  
                   <CustomFormField
             fieldType={FormFieldType.SELECT}
             control={form.control}
@@ -226,7 +229,7 @@ const RegisterForm=({user}:{user:User})=> {
             </CustomFormField>
 
 
-             <div className="flex flex-col gap-5 xl:flex-row">
+             <div className="flex flex-col gap-12 xl:flex-row">
                   <CustomFormField
                   fieldType={FormFieldType.INPUT}
                   control={form.control}
@@ -243,7 +246,7 @@ const RegisterForm=({user}:{user:User})=> {
 
              </div>
 
-             <div className="flex flex-col gap-5 xl:flex-row">
+             <div className="flex flex-col gap-12 lg:flex-row">
 
                    <CustomFormField
                    fieldType={FormFieldType.TEXTAREA}
@@ -261,7 +264,7 @@ const RegisterForm=({user}:{user:User})=> {
                    />
 
              </div>
-             <div className="flex flex-col gap-5 xl:flex-row  xl:gap-8 xl:w-full">
+             <div className="flex flex-col gap-5">
                    <CustomFormField
                    fieldType={FormFieldType.TEXTAREA}
                    control={form.control}
@@ -278,9 +281,9 @@ const RegisterForm=({user}:{user:User})=> {
                    />
              </div>
              </section>
-              <section space-y-6>
-                  <div mb-9 space-y-1>
-                        <h2 className="sub-header ">
+              <section className="py-10 flex flex-col gap-5">
+                  <div  >
+                        <h2 className="sub-header py-7">
                               Identification and Verification
                         </h2>
                   </div>
@@ -324,8 +327,8 @@ const RegisterForm=({user}:{user:User})=> {
            
            </section>
 
-           <section className=" space-y-6">
-            <div className="mb-9 space-y-1 ">
+           <section className="py-10 flex flex-col gap-5">
+            <div className="py-7">
                   <h2 className="sub-header">
                         Consent and Privacy
                   </h2>
