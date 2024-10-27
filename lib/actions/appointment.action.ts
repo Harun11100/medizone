@@ -37,7 +37,7 @@ export const createAppointment=async (appointment:CreateAppointmentParams) =>{
             
 
            )
-
+           
           return parseStringify(appointment)
 
          } catch (error) {
