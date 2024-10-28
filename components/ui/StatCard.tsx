@@ -1,10 +1,11 @@
+import { getRecentAppointmentList } from '@/lib/actions/appointment.action'
 import clsx from 'clsx'
 import Image from 'next/image'
 
 
 interface statCardProps{
 
-      type:"canceled"|"pending"|'appointments'
+      type:"cancelled"|"pending"|'appointments'
       label:string
       count:number
       icon:string
@@ -13,12 +14,13 @@ interface statCardProps{
 
 const StatCard = ({count=0,type,icon,label}:statCardProps) => {
 
-      console.log(icon)
+    
+     
   return (
    <div className={clsx('stat-card',{
       'bg-appointments':type === 'appointments',
       'bg-pending':type ==='pending',
-      'bg-cancelled':type==='canceled'
+      'bg-cancelled':type==='cancelled'
    })}> 
         <div className='flex items-center gap-4'>
              <Image

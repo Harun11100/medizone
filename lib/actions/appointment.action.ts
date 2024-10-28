@@ -1,8 +1,10 @@
 'use server'
 
-import { ID } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 import { APPOINTMENT_COLLECTION_ID, BUCKET_ID, DATABASE_ID, databases, ENDPOINT,  PROJECT_ID } from "../appwrite.config";
 import { parseStringify } from "../utils";
+import { Appointment } from "@/types/appwrite.types";
+
 
 
 export const createAppointment=async (appointment:CreateAppointmentParams) =>{
@@ -46,4 +48,48 @@ export const createAppointment=async (appointment:CreateAppointmentParams) =>{
 
     }
 
-  
+    export const getRecentAppointmentList= async ()=>{
+
+      try {
+        
+         const appointment =await databases.listDocuments(
+          DATABASE_ID !,
+          APPOINTMENT_COLLECTION_ID ! ,
+          [Query.orderDesc('$createdAt')]
+         )
+         
+         const initialCounts={
+          scheduledCount:0,
+          pendingCount:0,
+          cancelledCount:0
+         }
+      const counts =(appointment.documents as Appointment[]).reduce((accumulator,appointment)=>{
+
+
+
+           if(appointment.status === 'scheduled'){
+            accumulator.scheduledCount+=1
+           }else if(appointment.status === 'pending'){
+            accumulator.pendingCount+=1
+           }else if(appointment.status === 'cancelled'){
+            accumulator.cancelledCount+=1
+           
+           }
+           return accumulator
+
+      },initialCounts)
+
+        const dataObj ={
+            totalCount :appointment.total,
+            ...counts,
+            documents:appointment.documents
+            
+
+        }
+        return  parseStringify(dataObj)
+
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
