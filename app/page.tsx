@@ -1,4 +1,5 @@
 import PatientForm from "@/components/ui/forms/PatientForm";
+import PasskeyModal from "@/components/ui/PasskeyModal";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -6,10 +7,16 @@ import Link from "next/link";
 
 
 
-export default function Home() {
+export default function Home({searchParams}:SearchParamProps) {
+  
+  const isAdmin=(searchParams.admin==='true')
+  
+  
   return (
     <div className="flex h-screen max-h-screen">
       {/* OTP verification */}
+          {isAdmin && <PasskeyModal/> }
+        
 
        <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[500px]">
@@ -25,7 +32,8 @@ export default function Home() {
            © 2024 MediZone
            </p>
            <Link href='/?admin=true' className="text-blue-400">
-           Admin</Link>
+            admin
+           </Link>
          
            </div>
 
