@@ -1,10 +1,16 @@
+import {DataTable} from '@/components/ui/table/DataTable'
 import StatCard from '@/components/ui/StatCard'
 import { getRecentAppointmentList } from '@/lib/actions/appointment.action'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import {columns, Payment} from '@/components/ui/table/columns'
+
+
 
 const Admin = async () => {
+
+
 
       const appointments = await getRecentAppointmentList()
 
@@ -21,12 +27,12 @@ const Admin = async () => {
                className='h-15'
                />
             </Link>
-            <p className='text-red-500 text-xl'>Admin Dashboard</p>
+            <p className='text-white font-bold text-xl'>Admin Dashboard</p>
        </header>
 
        <main className='admin-main'>
             <section className='w-full space-y-4'>
-                  <h1 className='header'>Welcome</h1>
+                  <h1 className='header'>Welcome!<span className='text-orange-500'> Admin</span></h1>
                   <p className='text-dark-600'>Start the day with managing new appointment</p>
             </section>
 
@@ -49,6 +55,11 @@ const Admin = async () => {
               label='Cancelled Appointment'
               icon='/assets/icons/cancelled.svg'
               />
+            </section>
+            <section className=' '>
+               <DataTable columns={columns} data={appointments.documents}/>
+              
+           
             </section>
 
        </main>
