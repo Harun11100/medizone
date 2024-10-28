@@ -1,6 +1,6 @@
- 'use client'
+ 'use client';
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
       AlertDialog,
       AlertDialogAction,
@@ -20,53 +20,54 @@ import {
       InputOTPGroup,
       InputOTPSlot,
     } from "@/components/ui/input-otp"
-import { encryptKey } from '@/lib/utils'
+import { decryptKey, encryptKey } from '@/lib/utils'
 
     
-const PasskeyModal = () => {
+export const PasskeyModal = () => {
 
      const router=useRouter()
      const path =usePathname()
-     const [open,setOpen]=useState(true)
-     const [passKey,setPasskey]=useState('')
+     const [open,setOpen]=useState(false)
+     const [passkey,setPasskey]=useState('')
      const [error,setError]=useState('')
-     const closeModal=()=>{
-      setOpen(false);
-      router.push('/')
- 
-}    
+     
+    
 
-      const encriptedKey = typeof window !=='undefined'? window.localStorage.getItem('accessKey'):null
+      const encryptedKey = typeof window !=='undefined'? window.localStorage.getItem('accessKey'):null;
       
       useEffect(()=>{
 
-            if(path) {
-                  if (passKey===process.env.NEXT_PUBLIC_ADMIN_PASSKEY){    
+        const accessKey=encryptedKey && decryptKey(encryptedKey);
+
+
+            if(path) 
+                  if (accessKey===process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()){    
                   setOpen(false)
                   router.push('/admin')
                   }
-            }else{
-                  setError('Invalid Passkey, Please try again later')
-                 }
-
-
-
-      },[encriptedKey])
+            else{
+              setOpen(true);
+            }
+      },[encryptedKey]);
       
 
       const validatePasskey=(e:React.MouseEvent<HTMLButtonElement,MouseEvent>)=>{
            e.preventDefault()
-           if (passKey===process.env.NEXT_PUBLIC_ADMIN_PASSKEY){
-            const encriptedKey= encryptKey(passKey)
+           if (passkey===process.env.NEXT_PUBLIC_ADMIN_PASSKEY){
+            const encryptedKey= encryptKey(passkey)
 
-            localStorage.setItem('accessKey',encriptedKey)
+            localStorage.setItem('accessKey',encryptedKey);
             setOpen(false)
-            router.push('/admin')
            }else{
-            setError('Invalid Passkey, Please try again later')
+            setError('Invalid Passkey, Please try again later');
            }
       }
-
+ 
+    const closeModal=()=>{
+        setOpen(false);
+        router.push('/')
+   
+  }    
 
   return (
       <AlertDialog open={open} onOpenChange={setOpen}>
@@ -88,8 +89,8 @@ const PasskeyModal = () => {
            To access the admin page, please enter the passkey
           </AlertDialogDescription>
         </AlertDialogHeader>
-         <div className=''>
-                <InputOTP maxLength={6} value={passKey} onChange={(value)=>setPasskey(value)}>
+         <div>
+                <InputOTP maxLength={6} value={passkey} onChange={(value)=>setPasskey(value)}>
                   <InputOTPGroup className='shad-otp'>
                   < InputOTPSlot className='shad-otp-slot' index={0} />
                   < InputOTPSlot className='shad-otp-slot' index={1} />
@@ -110,11 +111,13 @@ const PasskeyModal = () => {
 
         <AlertDialogFooter>
           
-          <AlertDialogAction onClick={e=>validatePasskey(e)} className='shad-primary-btn w-full'>Enter Admin Passkey</AlertDialogAction>
+          <AlertDialogAction onClick={(e)=>validatePasskey(e)} className='shad-primary-btn w-full'>Enter Admin Passkey
+
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
 
-export default PasskeyModal
+
