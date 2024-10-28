@@ -1,3 +1,4 @@
+import StatCard from '@/components/ui/StatCard'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -24,8 +25,32 @@ const Admin = () => {
                   <h1 className='header'>Welcome</h1>
                   <p className='text-dark-600'>Start the day with managing new appointment</p>
             </section>
+
             <section className='admin-stat'>
- 
+              <StatCard
+              type='appointments'
+              count={5}
+              label='Scheduled Appointment'
+              icon='/assets/icons/appointments.svg'
+              />
+              <StatCard
+              type='pending'
+              count={4}
+              label='Pending Appointment'
+              icon='/assets/icons/pending.svg'
+              />
+              <StatCard
+              type='canceled'
+              count={3}
+              label='Cancelled Appointment'
+              icon='/assets/icons/cancelled.svg'
+              />
+              {/* <Image
+              src='/assets/icons/appointments.svg'
+              alt='appoinment'
+              width={50}
+              height={50}/> */}
+
             </section>
 
        </main>
