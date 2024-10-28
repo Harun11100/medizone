@@ -24,7 +24,7 @@ const PatientForm=()=> {
   const form= useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
       defaultValues: {
-        name: "harun",
+        name: "Md Harun Or Rashid",
         email:"harun@gmail.com",
         phone:"+8801746083370"
     },

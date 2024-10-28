@@ -6,7 +6,7 @@ import Link from "next/link";
 
 
 
- const Home=({searchParams}:SearchParamProps)=>{
+ const Home =({searchParams}:SearchParamProps)=>{
   
   const isAdmin=(searchParams?.admin==='true')
   
@@ -15,8 +15,8 @@ import Link from "next/link";
     <div className="flex h-screen max-h-screen">
    
           {isAdmin && <PasskeyModal/> }
-       <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[496px] py-10 ">
+       <section className="remove-scrollbar container my-10">
+        <div className="sub-container max-w-[496px] ">
           <Image 
           src='/assets/images/logo.png'
            alt="full-icon" 
@@ -25,7 +25,7 @@ import Link from "next/link";
            className="h-30"/>
            <PatientForm/>
 
-           <div className="text-14-regular mt-20 flex justify-between">
+           <div className="text-14-regular mt-10 flex justify-between">
            <p className="justify-items-end text-dark-600 xl:text-left">
            © 2024 MediZone
            </p>

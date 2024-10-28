@@ -73,17 +73,21 @@ export const PasskeyModal = () => {
       <AlertDialog open={open} onOpenChange={setOpen}>
       
       <AlertDialogContent className='shad-alert-dialog'>
-        <AlertDialogHeader className='flex items-start justify-between'>
-          <AlertDialogTitle className='flex header'>
+        <AlertDialogHeader >
+          <AlertDialogTitle className='flex items-start justify-between'>
             
-            Admin access <span className='text-orange-500'> verification</span> 
-            <Image src='/assets/icons/close.svg'
+            <h2 className='header'>
+            Admin access <span className='text-orange-500 '> verification</span> 
+            </h2>
+            
+           
+           <Image src='/assets/icons/close.svg'
             alt='close'
             width={20}
             height={20}
             onClick={()=>closeModal()}
-            className='cursor-pointer'/>
-
+            className='cursor-pointer hover:border'/>
+      
           </AlertDialogTitle>
           <AlertDialogDescription>
            To access the admin page, please enter the passkey
