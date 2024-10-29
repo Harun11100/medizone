@@ -8,9 +8,9 @@ import { Form } from "../form"
 import CustomFormField, { FormFieldType } from "./CustomFormField"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
-import { CreateAppointmentSchema, getAppointmentSchema, UserFormValidation } from "@/lib/Validation"
+import {  getAppointmentSchema, } from "@/lib/Validation"
 import { useRouter } from "next/navigation"
-import { createUser } from "@/lib/actions/patient.action"
+
 
 import "react-phone-number-input/style.css";
 import Image from "next/image"
@@ -32,7 +32,7 @@ const NewAppointmentForm = ({
       patientId: string;
       type: 'create' | 'cancel' | 'schedule';
       appointment?: Appointment; // Make this optional
-      setOpen: (open: boolean) => void;
+      setOpen?: (open: boolean) => void;
     }) => {
       const router = useRouter();
       const [isLoading, setIsLoading] = useState(false);
@@ -42,11 +42,11 @@ const NewAppointmentForm = ({
       const form = useForm<z.infer<typeof AppointmentValidation>>({
         resolver: zodResolver(AppointmentValidation),
         defaultValues: {
-          primaryPhysician: appointment?.primaryPhysician || "", // Use optional chaining with a fallback
-          schedule: appointment ? new Date(appointment.schedule) : new Date(),
-          reason: appointment?.reason || "",
+          primaryPhysician: appointment?appointment?.primaryPhysician :"", // Use optional chaining with a fallback
+          schedule: appointment ? new Date(appointment?.schedule) : new Date(Date.now()),
+          reason: appointment?appointment.reason :"",
           note: appointment?.note || "",
-          cancellationReason: appointment?.cancellationReason || "",
+          cancellationReason: appointment?.cancellationReason ||"",
         },
       });
     
@@ -74,7 +74,7 @@ const NewAppointmentForm = ({
               patient: patientId,
               primaryPhysician: values.primaryPhysician,
               schedule: new Date(values.schedule),
-              reason: values.reason,
+              reason: values.reason!,
               note: values.note,
               cancellationReason: values.cancellationReason,
               status: status as Status,
@@ -89,7 +89,7 @@ const NewAppointmentForm = ({
           } else {
             const appointmentToUpdate = {
               userId,
-              appointmentId: appointment?.$id!,
+              appointmentId: appointment?.$id,
               appointment: {
                 primaryPhysician: values.primaryPhysician,
                 schedule: new Date(values.schedule),

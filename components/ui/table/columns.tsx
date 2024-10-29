@@ -8,6 +8,7 @@ import { formatDateTime } from "@/lib/utils"
 import { Doctors } from "@/constant"
 import Image from "next/image"
 import AppointmentModal from "../AppointmentModal"
+import { Appointment } from "@/types/appwrite.types"
 
 
 
@@ -18,7 +19,7 @@ export type Appointments = {
   email: string
 }
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Appointment>[] = [
   
 {
   header:"ID",
@@ -55,13 +56,13 @@ export const columns: ColumnDef<Payment>[] = [
      accessorKey:'primaryPhysician',
      header:'Doctor',
      cell:({row})=>{
-
-        const doctor=Doctors.find(doctor=>doctor.name===row.original.primaryPhysician)
+         const appointment=row.original
+        const doctor=Doctors.find((doc)=>doc.name===appointment.primaryPhysician)
         
          return (
           <div className=" flex items-center gap-3">
             <Image 
-            src={doctor?.image}
+            src={doctor?.image!}
             alt='doctor'
             height={100}
             width={100}
@@ -79,56 +80,30 @@ export const columns: ColumnDef<Payment>[] = [
 {
   id:'actions',
   header:()=><div className="pl-4"> Actions</div>,
-  cell:({row:{original:data}})=>(
+  cell:({row})=>{
+      const appointment = row.original;
+    return(
     <div className="flex gap-1">
           <AppointmentModal 
           type='schedule' 
-          patientId={data.patient.$id}
-          userId={data.userId}
-          appointment={data}
+          patientId={appointment.patient.$id}
+          userId={appointment.userId}
+          appointment={appointment}
           title='Schedule Appointment'
           description='Please confirm the following details to schedule'
 
           />
            <AppointmentModal 
           type='cancel' 
-          patientId={data.patient.$id}
-          userId={data.userId}
-          appointment={data}
+          patientId={appointment.patient.$id}
+          userId={appointment.userId}
+          appointment={appointment}
       
           />
          
     </div>
   )
+}
 },
 
-
-
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
- 
-      return <div className="text-right font-medium">{formatted}</div>
-    },
-  },
 ]

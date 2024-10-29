@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import {
       Dialog,
@@ -12,27 +13,28 @@ import NewAppointmentForm from './forms/NewAppointmentForm'
 import { Appointment } from '@/types/appwrite.types';
 
 
+import "react-datepicker/dist/react-datepicker.css";
 
 const  AppointmentModal = ({type, patientId,userId,appointment
 }:{
   patientId:string;
   userId:string;
-  appointment:Appointment;
+  appointment?:Appointment;
   type:'schedule'|'cancel';
 
 
 }) => {
  
   const [open , setOpen]=useState(false)
- console.log(appointment)
+
 
 
 
   return (
       <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-      <Button className={`capitalize ${type==='schedule'?'text-green-500':'text-red-500'}`} variant='ghost'>{type}</Button>
-      
+      <Button className={`capitalize ${type==='schedule'?'text-green-500':'text-red-500'}`} variant='ghost'>{type}
+      </Button>
       </DialogTrigger>
       <DialogContent className='shad-dialog sm:max-w-md'>
         <DialogHeader className='mb-4 space-y-3'>

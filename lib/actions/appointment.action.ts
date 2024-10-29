@@ -114,6 +114,7 @@ export const createAppointment=async (appointment:CreateAppointmentParams) =>{
          }
           // sms notification
          revalidatePath('/admin')
+         return parseStringify(updatedAppointment)
           
          } catch (error) {
           console.log(error)
