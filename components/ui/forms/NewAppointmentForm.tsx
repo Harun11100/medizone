@@ -60,7 +60,7 @@ const NewAppointmentForm = ({
             status = 'scheduled';
             break;
           case 'cancel':
-            status = 'canceled';
+            status = 'cancelled';
             break;
           default:
             status = 'pending';
@@ -163,7 +163,7 @@ const NewAppointmentForm = ({
                     dateFormat="MM/dd/yyyy - h:mm aa"
                   />
     
-                  <div className="flex flex-col gap-5 xl:flex-row">
+                  <div className="flex gap-5 xl:flex-row">
                     <CustomFormField
                       fieldType={FormFieldType.TEXTAREA}
                       control={form.control}
