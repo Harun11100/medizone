@@ -1,8 +1,8 @@
 'use server'
 
 import { ID, Query } from "node-appwrite";
-import { APPOINTMENT_COLLECTION_ID, BUCKET_ID, DATABASE_ID, databases, ENDPOINT,  PROJECT_ID } from "../appwrite.config";
-import { parseStringify } from "../utils";
+import { APPOINTMENT_COLLECTION_ID, BUCKET_ID, DATABASE_ID, databases, ENDPOINT,  messaging,  PROJECT_ID } from "../appwrite.config";
+import { formatDateTime, parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
 import { revalidatePath } from "next/cache";
 
@@ -112,7 +112,14 @@ export const createAppointment=async (appointment:CreateAppointmentParams) =>{
           
           
          }
+         
           // sms notification
+          const smsMessage=`Hello! 
+           ${type==='schedule'?`Your appointment has been scheduled for ${formatDateTime(appointment.schedule!).dateTime} with Dr${appointment.primaryPhysician}.`:`Sorry ! Your appointment has been  Cancelled , For the following reason: ${appointment.cancellationReason} `}`
+
+
+         await sendSMSnotification(userId,smsMessage)
+
          revalidatePath('/admin')
          return parseStringify(updatedAppointment)
           
@@ -121,5 +128,24 @@ export const createAppointment=async (appointment:CreateAppointmentParams) =>{
          }
 
 
+
+     }
+
+
+     export const sendSMSnotification= async(userId:string,content:string) =>{
+
+      try {
+
+        const message= await messaging.
+        createSms(
+          ID.unique(),
+          content,
+          [],
+          [userId] 
+        )
+         return parseStringify(message)
+      } catch (error) {
+        console.log(error)
+      }
 
      }
